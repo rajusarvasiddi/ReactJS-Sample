@@ -46,7 +46,7 @@ function Invoices() {
                     }
                 </div>
                 <div className="flex-1 bg-gray-100 p-4 h-full overflow-auto">
-                    <div className="text-gray-600" style={{height: "3000px"}}>
+                    <div className="text-gray-600">
                         <Outlet />
                     </div>
                 </div>
