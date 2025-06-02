@@ -1,7 +1,9 @@
 import { Link, NavLink, Outlet, useLocation, useParams } from "react-router-dom";
+import PageTitle from "./shared/PageTitle";
 
 function Dashboard() {
     return <>
+    <PageTitle title="Dashboard" />
         {/* Scrollable Area: Sidebars + Main */}
         <div className="flex flex-1 overflow-hidden">
 

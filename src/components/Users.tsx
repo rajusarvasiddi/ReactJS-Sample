@@ -1,16 +1,17 @@
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import InfoIcon from '@mui/icons-material/Info';
+import PageTitle from './shared/PageTitle';
 
 function Users() {
     return <>
+        <PageTitle title='Users' />
         <main className="flex-1 p-4 overflow-auto">
             <div className="bg-white rounded shadow p-4 mb-4">
                 <h1 className="text-2xl font-bold mb-2 text-gray-800">Users</h1>
                 <div className="text-gray-600">This area does not grow past the screen. It stays scrollable inside itself.</div>
-            </div>
+            {/* </div>
 
-            <div className="bg-white rounded shadow p-4 mb-4">
+            <div className="bg-white rounded shadow p-4 mb-4"> */}
                 <div className="text-gray-600">
                     <div className="relative flex flex-col rounded-xl bg-transparent">
                         <h4 className="block text-xl font-medium text-slate-800">
