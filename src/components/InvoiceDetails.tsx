@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import PageTitle from "./shared/PageTitle";
 
 function InvoiceDetails() {
   const { invoiceId } = useParams<{ invoiceId: string }>();
@@ -10,6 +11,10 @@ function InvoiceDetails() {
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
+
+    if (!invoiceId) {
+      <PageTitle title={ "Invoice loading ... "} />
+    }
 
     const fetchData = async () => {
       setLoading(true);
@@ -51,48 +56,52 @@ function InvoiceDetails() {
   }, [data]);
 
   return (
-    <div>
-      {isLoading && <div>Loading details for ID: #{invoiceId}. Please wait...</div>}
-      {error && <div style={{ color: "red" }}>Error: {error.message}</div>}
-      {!isLoading && !error && data && (
-        <>
-          <h2>INVOICE DETAILS: #{invoiceId}</h2>
-          <table
-            style={{
-              borderCollapse: "collapse",
-              width: "100%",
-              marginTop: "1rem",
-            }}
-          >
-            <tbody>
-              {Object.entries(data).map(([key, value]) => (
-                <tr key={key}>
-                  <th
-                    style={{
-                      border: "1px solid #ccc",
-                      padding: "8px",
-                      textAlign: "left",
-                      background: "#f0f0f0",
-                    }}
-                  >
-                    {key}
-                  </th>
-                  <td
-                    style={{
-                      border: "1px solid #ccc",
-                      padding: "8px",
-                      whiteSpace: "pre-wrap",
-                    }}
-                  >
-                    {String(value)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </>
-      )}
-    </div>
+    <>
+      {invoiceId && <PageTitle title={ `Invoice ${invoiceId}`} />}
+      <div>
+        {isLoading && <div>Loading details for ID: #{invoiceId}. Please wait...</div>}
+        {error && <div style={{ color: "red" }}>Error: {error.message}</div>}
+        {!isLoading && !error && data && (
+          <>
+            <h2>INVOICE DETAILS: #{invoiceId}</h2>
+            <div>{data.body}</div>
+            <table
+              style={{
+                borderCollapse: "collapse",
+                width: "100%",
+                marginTop: "1rem",
+              }}
+            >
+              <tbody>
+                {Object.entries(data).map(([key, value]) => (
+                  <tr key={key}>
+                    <th
+                      style={{
+                        border: "1px solid #ccc",
+                        padding: "8px",
+                        textAlign: "left",
+                        background: "#f0f0f0",
+                      }}
+                    >
+                      {key}
+                    </th>
+                    <td
+                      style={{
+                        border: "1px solid #ccc",
+                        padding: "8px",
+                        whiteSpace: "pre-wrap",
+                      }}
+                    >
+                      {String(value)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+      </div>
+    </>
   );
 }
 

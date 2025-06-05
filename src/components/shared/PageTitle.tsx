@@ -1,18 +1,17 @@
 import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
 
 interface PageTitleProps {
     title: string;
 }
 
 const PageTitle: React.FC<PageTitleProps> = ({title }) => {
-    const location = useLocation();
+    // const location = useLocation();
 
     useEffect(() => {
         if (title) {
-            document.title = title;
+            document.title = `${title} - React App`;
         }
-    }, [location, title]);
+    }, [title]);
 
     return null;
 };

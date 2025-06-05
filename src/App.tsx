@@ -9,6 +9,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+          <div className="flex">Notification messages</div>
         <TopBar />
         <div className="flex flex-1 overflow-hidden">
         <NarrowSidebar />

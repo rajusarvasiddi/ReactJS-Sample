@@ -3,6 +3,7 @@ import React, { Suspense } from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import SidebarNavLink from './shared/SideNavLink';
+import PageTitle from './shared/PageTitle';
 
 const Calendar = React.lazy(() => import("./Calendar"));
 const Tasks = React.lazy(() => import("./Tasks"));
@@ -18,9 +19,9 @@ function NarrowSidebar() {
             {/* Scrollable icons A–Z */}
             <div className="flex-1 overflow-hidden relative">
                 <div id="sidebar-items" className="flex flex-col items-center overflow-y-auto pr-1 h-full pt-0">
-                    <SidebarNavLink to="/dashboard" label="W" />
-                    <SidebarNavLink to="/calendar" label="C" />
-                    <SidebarNavLink to="/inventory" label="I" />
+                    <SidebarNavLink to="/dashboard" label="D" tooltip="Dashboard" />
+                    <SidebarNavLink to="/calendar" label="C" tooltip="Calendar" />
+                    <SidebarNavLink to="/inventory" label="I" tooltip="Inventory" />
                 </div>
             </div>
         </aside>
@@ -33,7 +34,7 @@ function NarrowSidebar() {
                 {/* 2nd Level Navigation Routes */}
                 <Route path="/dashboard" element={ <Users /> } />
                 <Route path="users" element={ <Users /> } />
-                <Route path="invoice" element={ <Invoices /> }>
+                <Route path="invoice" element={ <><PageTitle title='Invoices' /> <Invoices /></> }>
                     <Route path=":invoiceId" element={ <InvoiceDetails /> } />
                 </Route>
                 <Route path="tasks" element={ <Tasks /> } />
@@ -42,7 +43,7 @@ function NarrowSidebar() {
             <Route path="/calendar" element={ <Calendar /> } />
             <Route path="/inventory" element={ <Inventory /> } />
             </Routes>
-        </Suspense> 
+        </Suspense>
     </>
 }
 

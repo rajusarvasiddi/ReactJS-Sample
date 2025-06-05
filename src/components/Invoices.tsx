@@ -1,5 +1,6 @@
 import { Suspense, useEffect, useState } from "react";
 import { Link, Outlet, useParams } from "react-router-dom";
+import PageTitle from "./shared/PageTitle";
 
 function Invoices() {
     const [data, setData] = useState<Record<string, any> | null>([]);
@@ -27,7 +28,7 @@ function Invoices() {
 
     return <>
         <main className="flex-1 p-4 overflow-auto">
-            <div className="bg-white flex-1 rounded shadow p-4 min-h-screen">
+            <div className="bg-white flex-1 rounded shadow p-4 min-h-screen--">
                 <h1 className="text-2xl font-bold mb-2 text-gray-800">Invoices</h1>
                 <p className="text-gray-600">This area does not grow past the screen. It stays scrollable inside itself.</p>
                 <div className="flex flex-1 space-x-4 h-[calc(100vh-10rem)]">
