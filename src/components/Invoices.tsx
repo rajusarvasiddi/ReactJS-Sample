@@ -1,10 +1,13 @@
 import { Suspense, useEffect, useState } from "react";
 import { Link, Outlet, useParams } from "react-router-dom";
 import PageTitle from "./shared/PageTitle";
+import apiClient from "./shared/apiClient";
 
 function Invoices() {
     const [data, setData] = useState<Record<string, any> | null>([]);
     const { invoiceId } = useParams<{invoiceId: string}>();
+
+    const [userData, setUserData] = useState<Record<string, any> | null>([]);
 
     useEffect(() => {
         const fetchData = async() => {
@@ -24,6 +27,20 @@ function Invoices() {
         };
 
         fetchData();
+    }, []);
+
+    useEffect(() => {
+        const getUsers = async () => {
+            setUserData(null);
+            try {
+                const response = await apiClient.get('comments');
+                setUserData(response.data);
+                console.log(response.data);
+            } catch(error) {
+                console.log("API Error :: ", error);
+            }
+        };
+        getUsers();
     }, []);
 
     return <>

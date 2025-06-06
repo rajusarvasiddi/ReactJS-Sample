@@ -1,4 +1,3 @@
-import * as React from 'react';
 function TopBar() {
     return <div className="bg-black text-white h-8 flex justify-between px-6 items-center text-sm">
     <div className="flex items-center space-x-4 w-1/3">

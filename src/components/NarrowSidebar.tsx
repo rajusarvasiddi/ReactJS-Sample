@@ -7,7 +7,7 @@ import PageTitle from './shared/PageTitle';
 
 const Calendar = React.lazy(() => import("./Calendar"));
 const Tasks = React.lazy(() => import("./Tasks"));
-const Users = React.lazy(() => import("./Users"));
+const Users = React.lazy(() => import("./Users/Users"));
 const Inventory = React.lazy(() => import("./Inventory"));
 const Invoices = React.lazy(() => import("./Invoices"));
 const InvoiceDetails = React.lazy(() => import("./InvoiceDetails"));

@@ -22,7 +22,7 @@ function InvoiceDetails() {
       setData(null);
       try {
         const response = await fetch(
-          `https://jsonplaceholder.typicode.com/posts/${invoiceId}`,
+          `https://jsonplaceholder.typicode.com/posts/${invoiceId}?_delay=500`,
           { signal }
         );
 
@@ -64,38 +64,24 @@ function InvoiceDetails() {
         {!isLoading && !error && data && (
           <>
             <h2>INVOICE DETAILS: #{invoiceId}</h2>
-            <div>{data.body}</div>
-            <table
-              style={{
-                borderCollapse: "collapse",
-                width: "100%",
-                marginTop: "1rem",
-              }}
-            >
+            <table className="table-auto border-collapse border">
               <tbody>
-                {Object.entries(data).map(([key, value]) => (
-                  <tr key={key}>
-                    <th
-                      style={{
-                        border: "1px solid #ccc",
-                        padding: "8px",
-                        textAlign: "left",
-                        background: "#f0f0f0",
-                      }}
-                    >
-                      {key}
-                    </th>
-                    <td
-                      style={{
-                        border: "1px solid #ccc",
-                        padding: "8px",
-                        whiteSpace: "pre-wrap",
-                      }}
-                    >
-                      {String(value)}
-                    </td>
-                  </tr>
-                ))}
+                <tr className="hover:bg-gray-50">
+                  <th className="border px-4 py-2">ID</th>
+                  <td className="border px-4 py-2">{data.id}</td>
+                </tr>
+                <tr className="hover:bg-gray-50">
+                  <th className="border px-4 py-2">User ID</th>
+                  <td className="border px-4 py-2">{data.userId}</td>
+                </tr>
+                <tr className="hover:bg-gray-50">
+                  <th className="border px-4 py-2">Title</th>
+                  <td className="border px-4 py-2">{data.title}</td>
+                </tr>
+                <tr className="hover:bg-gray-50">
+                  <th className="border px-4 py-2">Body</th>
+                  <td className="border px-4 py-2">{data.body}</td>
+                </tr>
               </tbody>
             </table>
           </>
