@@ -1,6 +1,5 @@
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Outlet, useParams } from "react-router-dom";
-import PageTitle from "./shared/PageTitle";
 import apiClient from "../api/apiClient";
 
 function Invoices() {
