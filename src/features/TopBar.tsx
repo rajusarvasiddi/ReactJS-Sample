@@ -14,7 +14,7 @@ function TopBar() {
     </div>
 
     <div className="w-full max-w-xs mx-auto flex justify-center items-center w-1/3">
-        <input type="text" className="w-full py-1 px-3 rounded bg-white text-black text-sm shadow"
+        <input type="text" name="Search" className="w-full py-1 px-3 rounded bg-white text-black text-sm shadow"
             placeholder="Search..." />
     </div>
 
