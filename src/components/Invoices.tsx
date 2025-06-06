@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { Link, Outlet, useParams } from "react-router-dom";
 import PageTitle from "./shared/PageTitle";
-import apiClient from "./shared/apiClient";
+import apiClient from "../api/apiClient";
 
 function Invoices() {
     const [data, setData] = useState<Record<string, any> | null>([]);

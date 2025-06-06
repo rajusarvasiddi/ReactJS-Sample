@@ -1,4 +1,4 @@
-import apiClient from '../shared/apiClient';
+import apiClient from './apiClient';
 
 export const getUsers = async (url: string) => {
   const response = await apiClient.get(url);
