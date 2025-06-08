@@ -2,8 +2,8 @@ import React, { Suspense } from 'react';
 
 import { Outlet, Route, Routes } from 'react-router-dom';
 import Dashboard from './Dashboard';
-import SidebarNavLink from './shared/SideNavLink';
-import PageTitle from './shared/PageTitle';
+import SidebarNavLink from '../shared/SideNavLink';
+import PageTitle from '../shared/PageTitle';
 
 const Calendar = React.lazy(() => import("./Calendar"));
 const Tasks = React.lazy(() => import("./Tasks"));

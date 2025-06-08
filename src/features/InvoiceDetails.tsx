@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import PageTitle from "./shared/PageTitle";
+import PageTitle from "../shared/PageTitle";
 
 function InvoiceDetails() {
   const { invoiceId } = useParams<{ invoiceId: string }>();

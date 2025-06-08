@@ -1,5 +1,5 @@
 import { Link, NavLink, Outlet, useLocation, useParams } from "react-router-dom";
-import PageTitle from "./shared/PageTitle";
+import PageTitle from "../shared/PageTitle";
 
 function Dashboard() {
     return <>
