@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PageTitle from "../shared/PageTitle";
+import { useNetworkStatus } from "../Components/NetworkContext";
+import { Button } from "@mui/material";
 
 function InvoiceDetails() {
   const { invoiceId } = useParams<{ invoiceId: string }>();
   const [data, setData] = useState<Record<string, any> | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setLoading] = useState(false);
+  const { isOnline } = useNetworkStatus();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -81,6 +84,14 @@ function InvoiceDetails() {
                 <tr className="hover:bg-gray-50">
                   <th className="border px-4 py-2">Body</th>
                   <td className="border px-4 py-2">{data.body}</td>
+                </tr>
+                <tr>
+                  <th></th>
+                  <td>
+                    <Button variant="contained" color="primary" disabled={ !isOnline }>
+                      Pay Invoice
+                    </Button>
+                  </td>
                 </tr>
               </tbody>
             </table>

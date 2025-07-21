@@ -6,6 +6,7 @@ import SidebarNavLink from '../shared/SideNavLink';
 import PageTitle from '../shared/PageTitle';
 import Overview from './Overview';
 import NetworkStatus from '../Components/NetworkStatus';
+import { NetworkProvider } from '../Components/NetworkContext';
 
 const Calendar = React.lazy(() => import("./Calendar"));
 const Tasks = React.lazy(() => import("./Tasks"));
@@ -33,41 +34,42 @@ function NarrowSidebar() {
                 </div>
             </aside>
             <Outlet />
+            <NetworkProvider>
+                <NetworkStatus />
+                <Suspense fallback={<div>loading...</div>}>
+                    <Routes>
+                        {/* <Route path="/" element={<Overview />} /> */}
+                        <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
-            <NetworkStatus />
-            <Suspense fallback={<div>loading...</div>}>
-                <Routes>
-                    {/* <Route path="/" element={<Overview />} /> */}
-                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                        <Route path="/dashboard" element={<Dashboard />}>
+                            {/* 2nd Level Navigation Routes */}
+                            {/* <Route path="/dashboard/overview" element={<Dashboard />} /> */}
+                            <Route index element={<Navigate to="overview" replace />} />
 
-                    <Route path="/dashboard" element={<Dashboard />}>
-                        {/* 2nd Level Navigation Routes */}
-                        {/* <Route path="/dashboard/overview" element={<Dashboard />} /> */}
-                        <Route index element={<Navigate to="overview" replace />} />
-
-                        <Route path="users" element={<Users />} />
-                        <Route path="overview" element={<Overview />} />
-                        <Route
-                            path="invoice"
-                            element={
-                                <>
-                                    <PageTitle title="Invoices" /> <Invoices />
-                                </>
-                            }
-                        >
-                            <Route path=":invoiceId" element={<InvoiceDetails />} />
+                            <Route path="users" element={<Users />} />
+                            <Route path="overview" element={<Overview />} />
+                            <Route
+                                path="invoice"
+                                element={
+                                    <>
+                                        <PageTitle title="Invoices" /> <Invoices />
+                                    </>
+                                }
+                            >
+                                <Route path=":invoiceId" element={<InvoiceDetails />} />
+                            </Route>
+                            <Route path="tasks" element={<Tasks />} />
+                            <Route path="reports" element={<Reports />} />
                         </Route>
-                        <Route path="tasks" element={<Tasks />} />
-                        <Route path="reports" element={<Reports />} />
-                    </Route>
-                    <Route path="/calendar" element={<Calendar />} />
-                    <Route path="/inventory" element={<Inventory />} />
-                    {/* <Route path="/onboard" element={ <Onboard /> } >
-                <Route path="company" element={ <><PageTitle title='Company' /> <CreateCompany /></> } />
-                <Route path="user" element={ <><PageTitle title='User' /> <Inventory /></> } />
-            </Route> */}
-                </Routes>
-            </Suspense>
+                        <Route path="/calendar" element={<Calendar />} />
+                        <Route path="/inventory" element={<Inventory />} />
+                        {/* <Route path="/onboard" element={ <Onboard /> } >
+                    <Route path="company" element={ <><PageTitle title='Company' /> <CreateCompany /></> } />
+                    <Route path="user" element={ <><PageTitle title='User' /> <Inventory /></> } />
+                </Route> */}
+                    </Routes>
+                </Suspense>
+            </NetworkProvider>
         </>
     );
 }
