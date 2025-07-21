@@ -7,6 +7,9 @@ import PageTitle from '../shared/PageTitle';
 import Overview from './Overview';
 import NetworkStatus from '../Components/NetworkStatus';
 import { NetworkProvider } from '../Components/NetworkContext';
+import Onboard from './Onboard/Onboard';
+import CreateCompany from './Onboard/Company';
+import ProductForm from './Catalogue';
 
 const Calendar = React.lazy(() => import("./Calendar"));
 const Tasks = React.lazy(() => import("./Tasks"));
@@ -29,7 +32,7 @@ function NarrowSidebar() {
                         <SidebarNavLink to="/dashboard" label="D" tooltip="Dashboard" />
                         <SidebarNavLink to="/calendar" label="C" tooltip="Calendar" />
                         <SidebarNavLink to="/inventory" label="I" tooltip="Inventory" />
-                        {/* <SidebarNavLink to='/onboard' label='O' tooltip="Onboard" /> */}
+                        <SidebarNavLink to='/onboard' label='O' tooltip="Onboard" />
                     </div>
                 </div>
             </aside>
@@ -58,15 +61,16 @@ function NarrowSidebar() {
                             >
                                 <Route path=":invoiceId" element={<InvoiceDetails />} />
                             </Route>
+                            <Route path='products' element={<ProductForm />} />
                             <Route path="tasks" element={<Tasks />} />
                             <Route path="reports" element={<Reports />} />
                         </Route>
                         <Route path="/calendar" element={<Calendar />} />
                         <Route path="/inventory" element={<Inventory />} />
-                        {/* <Route path="/onboard" element={ <Onboard /> } >
+                        <Route path="/onboard" element={ <Onboard /> } >
                     <Route path="company" element={ <><PageTitle title='Company' /> <CreateCompany /></> } />
                     <Route path="user" element={ <><PageTitle title='User' /> <Inventory /></> } />
-                </Route> */}
+                </Route>
                     </Routes>
                 </Suspense>
             </NetworkProvider>

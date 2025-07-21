@@ -19,7 +19,6 @@ interface CompanyFormErrors {
     country?: string;
 }
 
-// Example country list with codes and zipcode length
 const countries = [
     { code: 'US', name: 'United States' },
     { code: 'IN', name: 'India' },
