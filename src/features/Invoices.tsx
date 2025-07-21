@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import apiClient from "../api/apiClient";
+import Placeholder from "../Components/Placeholder";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+
 
 function Invoices() {
     const [data, setData] = useState<Record<string, any> | null>([]);
     const { invoiceId } = useParams<{invoiceId: string}>();
+    const location = useLocation();
 
     const [userData, setUserData] = useState<Record<string, any> | null>([]);
+    const showPlaceholder = location.pathname === '/dashboard/invoice';
 
     useEffect(() => {
         const fetchData = async() => {
@@ -68,7 +73,16 @@ function Invoices() {
 
                     <div className="flex-1 bg-gray-100 p-4 h-full overflow-auto">
                         <div className="text-gray-600">
-                            <Outlet />
+                            {
+                            showPlaceholder ? (
+                            <div className="text-lg text-gray-500">
+                                <Placeholder
+                                    message="Select an invoice from the list to view invoice details."
+                                    icon={<InfoOutlinedIcon sx={{ fontSize: 60 }} />}
+                                />
+                            </div>) : (
+                                <Outlet />
+                            )}
                         </div>
                     </div>
                 </div>
