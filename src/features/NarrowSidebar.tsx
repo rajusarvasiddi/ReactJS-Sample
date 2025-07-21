@@ -4,6 +4,7 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import SidebarNavLink from '../shared/SideNavLink';
 import PageTitle from '../shared/PageTitle';
+import Overview from './Overview';
 
 const Calendar = React.lazy(() => import("./Calendar"));
 const Tasks = React.lazy(() => import("./Tasks"));
@@ -22,6 +23,7 @@ function NarrowSidebar() {
                     <SidebarNavLink to="/dashboard" label="D" tooltip="Dashboard" />
                     <SidebarNavLink to="/calendar" label="C" tooltip="Calendar" />
                     <SidebarNavLink to="/inventory" label="I" tooltip="Inventory" />
+                    {/* <SidebarNavLink to='/onboard' label='O' tooltip="Onboard" /> */}
                 </div>
             </div>
         </aside>
@@ -29,11 +31,12 @@ function NarrowSidebar() {
 
         <Suspense fallback={<div>loading...</div>}>
             <Routes>
-            <Route path="/" element={ <Calendar /> } />
+            <Route path="/" element={ <Overview /> } />
             <Route path="/dashboard" element={ <Dashboard /> }>
                 {/* 2nd Level Navigation Routes */}
-                <Route path="/dashboard" element={ <Users /> } />
+                <Route path="/dashboard/overview" element={ <Overview /> } />
                 <Route path="users" element={ <Users /> } />
+                <Route path="overview" element={ <Overview /> } />
                 <Route path="invoice" element={ <><PageTitle title='Invoices' /> <Invoices /></> }>
                     <Route path=":invoiceId" element={ <InvoiceDetails /> } />
                 </Route>
@@ -42,6 +45,10 @@ function NarrowSidebar() {
             </Route>
             <Route path="/calendar" element={ <Calendar /> } />
             <Route path="/inventory" element={ <Inventory /> } />
+            {/* <Route path="/onboard" element={ <Onboard /> } >
+                <Route path="company" element={ <><PageTitle title='Company' /> <CreateCompany /></> } />
+                <Route path="user" element={ <><PageTitle title='User' /> <Inventory /></> } />
+            </Route> */}
             </Routes>
         </Suspense>
     </>

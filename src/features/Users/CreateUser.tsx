@@ -1,3 +1,5 @@
+import React from "react";
+
 const CreateUser: React.FC = () => {
     return <>
         <aside className="w-64 bg-gray-100 p-4 shrink-0 overflow-auto">
@@ -55,4 +57,4 @@ const CreateUser: React.FC = () => {
         </aside>
     </>
 }
-export default CreateUser;
+export default React.memo(CreateUser);
