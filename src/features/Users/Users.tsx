@@ -16,14 +16,10 @@ function Users() {
     }
 
     return <>
-        <PageTitle title='Users' />
         <main className="flex-1 p-4 overflow-auto">
             <div className="bg-white rounded shadow p-4 mb-4">
                 <h1 className="text-2xl font-bold mb-2 text-gray-800">Users</h1>
                 <div className="text-gray-600">This area does not grow past the screen. It stays scrollable inside itself.</div>
-            {/* </div>
-
-            <div className="bg-white rounded shadow p-4 mb-4"> */}
             <button 
                 onClick={toggleCreateUserForm}
                 className="mt-4 rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
@@ -35,7 +31,7 @@ function Users() {
             <div className="bg-white rounded shadow p-4 mb-4">
                 <h2 className="text-xl font-semibold mb-2 text-gray-800">SVG Generator</h2>
                 <p className="text-gray-600">
-                    <a href="https://svg-path.com/" target="_blank">https://svg-path.com/</a>
+                    <a href="https://svg-path.com/" target="_blank" rel="noreferrer">https://svg-path.com/</a>
                 </p>
             </div>
             <div className="bg-white rounded shadow p-4 mb-4">

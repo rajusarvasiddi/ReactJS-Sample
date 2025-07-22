@@ -49,7 +49,7 @@ function NarrowSidebar() {
                             {/* <Route path="/dashboard/overview" element={<Dashboard />} /> */}
                             <Route index element={<Navigate to="overview" replace />} />
 
-                            <Route path="users" element={<Users />} />
+                            <Route path="users" element={<><PageTitle title="Users" /><Users /></>} />
                             <Route path="overview" element={<Overview />} />
                             <Route
                                 path="invoice"
@@ -61,7 +61,7 @@ function NarrowSidebar() {
                             >
                                 <Route path=":invoiceId" element={<InvoiceDetails />} />
                             </Route>
-                            <Route path='products' element={<ProductForm />} />
+                            <Route path='products' element={ <><PageTitle title="Products Catalogue" /><ProductForm /></> } />
                             <Route path="tasks" element={<Tasks />} />
                             <Route path="reports" element={<Reports />} />
                         </Route>
