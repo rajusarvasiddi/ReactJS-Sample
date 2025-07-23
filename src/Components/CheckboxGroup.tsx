@@ -1,17 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Checkbox from "./Checkbox";
 
 
-const CheckboxGroup: React.FC<any> = ({ options, initialValues = [], onChange, groupName, groupLabel }) => {
+const CheckboxGroup: React.FC<any> = ({ 
+    options, 
+    initialValues = [], 
+    onChange, 
+    groupName, 
+    groupLabel,
+    minSelections,
+    errorMessage,
+    required = false
+ }) => {
     const [selectedValues, setSelectedValues] = useState(initialValues || []);
+    const [isValid, setIsValid] = useState(true);
+
+    // Determine the effective minimum selections for validation
+    const validationMinSelections = required && minSelections === undefined ? 1 : minSelections || 0;
+    // If required and minSelections isn't explicitly set, default to 1. Otherwise, use minSelections if provided, or 0 if neither required nor minSelections is set.
+
+    const defaultErrorMessage = `Please select at least ${validationMinSelections} option(s).`;
+    const finalErrorMessage = errorMessage || defaultErrorMessage;
+
+    useEffect(() => {
+        if (required) {
+            setIsValid(selectedValues.length >= validationMinSelections);
+        } else {
+            setIsValid(true);
+        }
+    }, [selectedValues, required, validationMinSelections]);
+    
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {value, checked} = event.target;
-        let newSelectedValues = [...selectedValues];
+        let newSelectedValues;
 
         if(checked) {
-            newSelectedValues.push(value);
+            // newSelectedValues.push(value);
+            newSelectedValues = [...selectedValues, value];
         } else {
-            newSelectedValues = newSelectedValues.filter(item => item !== value);
+            newSelectedValues = selectedValues.filter((val: any) => val !== value);
         }
 
         setSelectedValues(newSelectedValues);
@@ -20,7 +47,7 @@ const CheckboxGroup: React.FC<any> = ({ options, initialValues = [], onChange, g
 
     return <>
         <fieldset className="checkbox-group">
-            <legend>{groupLabel}</legend>
+            <legend>{groupLabel} {required && <span style={{color: 'red'}}>*</span>}</legend>
             {options?.map((option: any) => (
                 <Checkbox
                     key={option.value}
@@ -31,6 +58,9 @@ const CheckboxGroup: React.FC<any> = ({ options, initialValues = [], onChange, g
                     name={groupName}
                 />
             ))}
+            {required && !isValid && (
+                <p style={{color: 'red'}}>{finalErrorMessage}</p>
+            )}
         </fieldset>
     </>
 }

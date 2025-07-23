@@ -93,6 +93,8 @@ const CreateProduct: React.FC = () => {
                                             groupName="productColors"
                                             groupLabel="Colors"
                                             onChange={handleSelectionChange}
+                                            required={true}
+                                            minSelections={2}
                                         />
                                         {/* <p>Selected : {selectedOptions.join(', ') || 'None'}</p> */}
                                     </div>
