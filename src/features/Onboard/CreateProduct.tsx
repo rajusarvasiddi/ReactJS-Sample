@@ -5,7 +5,9 @@ const CreateProduct: React.FC = () => {
     const checkboxOptions = [
         { label: "Red", value: "red" },
         { label: "Blue", value: "blue" },
-        { label: "Green", value: "green" }
+        { label: "Green", value: "green" },
+        { label: "Yellow", value: "yellow" },
+        { label: "Black", value: "black" }
     ];
     const [selectedOptions] = useState<string[]>(['red', 'green']);
 
@@ -95,6 +97,7 @@ const CreateProduct: React.FC = () => {
                                             onChange={handleSelectionChange}
                                             required={true}
                                             minSelections={2}
+                                            maxSelections={4}
                                         />
                                         {/* <p>Selected : {selectedOptions.join(', ') || 'None'}</p> */}
                                     </div>
