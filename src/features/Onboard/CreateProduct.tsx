@@ -7,12 +7,45 @@ const CreateProduct: React.FC = () => {
         { label: "Blue", value: "blue" },
         { label: "Green", value: "green" }
     ];
-    const [selectedOptions, setSelectedOptions] = useState<string[]>(['red', 'green']);
+    const [selectedOptions] = useState<string[]>(['red', 'green']);
+
+    const [formData, setFormData] = useState({
+        productName: "",
+        productCategory: "",
+        productColors: selectedOptions,
+    });
+
+    const handleInput = (event: any) => {
+        setFormData((prev) => {
+            return {
+                ...prev,
+                [event.target.name]: event.target.value
+            }
+        })
+    }
+
+    const dropdownChange = (event: any) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            [event.target.name]: event.target.value
+        })
+    )
+    }
 
     const handleSelectionChange = (newSelection: string[]) => {
-        setSelectedOptions(newSelection);
-        console.log('Selected Options :: ', newSelection);
-    }   
+        // setSelectedOptions(newSelection);
+        // console.log('Selected Options :: ', newSelection);
+        setFormData((prev) => ({
+            ...prev,
+            productColors: newSelection
+        }));
+    }
+
+    const handleSubmit = (event: any) => {
+        event.preventDefault();
+        console.log('Form Data Submitted: ', formData);
+    }
+
     return <>
         <aside className="w-64 bg-gray-100 p-4 shrink-0 overflow-auto">
             <div className="text-gray-600">
@@ -34,19 +67,19 @@ const CreateProduct: React.FC = () => {
                                 Availability - Dropdown (In Stock, Out of Stock),
                                 Return Policy (optional) - Textarea (e.g., 30 days return),
                              */}
-                            <form className="mt-8 mb-2 w-full" name="createProductForm">
+                            <form onSubmit={handleSubmit} className="mt-8 mb-2 w-full" name="createProductForm">
                                 <div className="mb-1 flex flex-col gap-6">
                                     <div className="w-full max-w-sm min-w-[200px]">
                                         <label className="block mb-2 text-sm text-slate-600" htmlFor="productName">
                                             Product Name
                                         </label>
-                                        <input type="text" id="productName" name="productName" className="placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow w-full" placeholder="Product Name" />
+                                        <input type="text" onChange={handleInput} id="productName" name="productName" className="placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow w-full" placeholder="Product Name" />
                                     </div>
                                     <div className="w-full max-w-sm min-w-[200px]">
                                         <label className="block mb-2 text-sm text-slate-600" htmlFor="productCategory">
                                             Category
                                         </label>
-                                        <select id="productCategory" name="productCategory" className="text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow w-full">
+                                        <select onChange={dropdownChange} value={formData.productCategory} id="productCategory" name="productCategory" className="text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow w-full">
                                             <option value="">Select Category</option>
                                             <option value="electronics">Electronics</option>
                                             <option value="furniture">Furniture</option>
@@ -61,7 +94,7 @@ const CreateProduct: React.FC = () => {
                                             groupLabel="Colors"
                                             onChange={handleSelectionChange}
                                         />
-                                        <p>Selected : {selectedOptions.join(', ') || 'None'}</p>
+                                        {/* <p>Selected : {selectedOptions.join(', ') || 'None'}</p> */}
                                     </div>
                                     {/* <div className="w-full max-w-sm min-w-[200px]">
                                         <label className="block mb-2 text-sm text-slate-600">
@@ -89,7 +122,7 @@ const CreateProduct: React.FC = () => {
                                         Remember Me
                                     </label>
                                 </div> */}
-                                <button className="mt-4 w-full rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                                <button className="mt-4 w-full rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="submit">
                                     Create
                                 </button>
                                 {/* <p className="flex justify-center mt-6 text-sm text-slate-600">
