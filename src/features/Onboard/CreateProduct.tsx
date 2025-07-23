@@ -98,6 +98,7 @@ const CreateProduct: React.FC = () => {
                                             required={true}
                                             minSelections={2}
                                             maxSelections={4}
+                                            showCheckAll={true}
                                         />
                                         {/* <p>Selected : {selectedOptions.join(', ') || 'None'}</p> */}
                                     </div>

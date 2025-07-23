@@ -11,23 +11,37 @@ const CheckboxGroup: React.FC<any> = ({
     minSelections,
     maxSelections,
     errorMessage,
-    required = false
+    required = false,
+    showCheckAll = false,
+    checkAllLabel
  }) => {
     const [selectedValues, setSelectedValues] = useState(initialValues || []);
     const [isValid, setIsValid] = useState(true);
 
+    // Calculate CheckAll state if showCheckAll is true
+    const isAllChecked = selectedValues.length === options.length;
+    const isIndeterminate = selectedValues.length > 0 && selectedValues.length < options.length;
+
     // Determine the effective minimum selections for validation
     const validationMinSelections = required && minSelections === undefined ? 1 : minSelections || 0;
-    // If required and minSelections isn't explicitly set, default to 1. Otherwise, use minSelections if provided, or 0 if neither required nor minSelections is set.
-
     const validationMaxSelections = maxSelections === undefined ? options.length : maxSelections;
-    // If maxSelections isn't explicitly set, default to the length of options. Otherwise, use  maxSelections if provided.
+
+
+    // --- Dynamic Error Message ---
+    let currentErrorMessage: string = '';
+    if (selectedValues.length < validationMinSelections) {
+        currentErrorMessage = `Please select at least ${validationMinSelections} option(s).`;
+    } else if (selectedValues.length > validationMaxSelections) {
+        currentErrorMessage = `Please select no more than ${validationMaxSelections} option(s).`;
+    }
+
+    const finalErrorMessage = errorMessage || currentErrorMessage;
 
     // const defaultErrorMessage = `Please select at least ${validationMinSelections} option(s).`;
-    const defaultErrorMessage = selectedValues.length < validationMinSelections
-        ? `Please select at least ${validationMinSelections} option(s).`
-        : `Please select no more than ${validationMaxSelections} option(s).`;
-    const finalErrorMessage = errorMessage || defaultErrorMessage;
+    // const defaultErrorMessage = selectedValues.length < validationMinSelections
+    //     ? `Please select at least ${validationMinSelections} option(s).`
+    //     : `Please select no more than ${validationMaxSelections} option(s).`;
+    // const finalErrorMessage = errorMessage || defaultErrorMessage;
 
     // useEffect(() => {
     //     if (required) {
@@ -58,9 +72,39 @@ const CheckboxGroup: React.FC<any> = ({
         onChange && onChange(newSelectedValues);
     }
 
+    const handleCheckAllChange = (event: any) => {
+        const checked = event.target.checked;
+        let newSelectedValues = [];
+
+        if (checked) {
+            // Select all options
+            newSelectedValues = options.map((option: any) => option.value);
+        } else {
+            // Unselect all options
+            newSelectedValues = [];
+        }
+        setSelectedValues(newSelectedValues);
+        onChange && onChange(newSelectedValues);
+    };
+
+
+    const displayCheckAllLabel = checkAllLabel || "Select All";
     return <>
         <fieldset className="checkbox-group">
             <legend>{groupLabel} {required && <span style={{color: 'red'}}>*</span>}</legend>
+            {showCheckAll && (
+                <div>
+                <label>
+                    <input
+                    type="checkbox"
+                    onChange={handleCheckAllChange}
+                    checked={isAllChecked}
+                    // ref={input => input && (input.indeterminate = isIndeterminate)} // Indeterminate state
+                    />
+                    {displayCheckAllLabel}
+                </label>
+                </div>
+            )}
             {options?.map((option: any) => (
                 <Checkbox
                     key={option.value}
@@ -71,9 +115,8 @@ const CheckboxGroup: React.FC<any> = ({
                     name={groupName}
                 />
             ))}
-            {required && !isValid && (
-                <p style={{color: 'red'}}>{finalErrorMessage}</p>
-            )}
+            {!isValid && <p style={{ color: 'red' }}>{finalErrorMessage}</p>}
+
         </fieldset>
     </>
 }
