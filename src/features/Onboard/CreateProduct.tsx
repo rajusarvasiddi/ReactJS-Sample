@@ -20,15 +20,26 @@ const CreateProduct: React.FC = () => {
         { label: "XXL", value: "extra-extra-large" },
         { label: "XXXL", value: "extra-extra-extra-large" }
     ];
+    const brandOptions = [
+        { label: "Apple", value: "apple" },
+        { label: "Samsung", value: "samsung" },
+        { label: "HP", value: "hp" },
+        { label: "Sony", value: "sony" },
+        { label: "Xiaomi", value: "xiaomi" },
+        { label: "Nokia", value: "nokia" },
+        { label: "LG", value: "lg" }
+    ];
 
-    const [selectedColors] = useState<string[]>([]);
-    const [selectedSizes] = useState<string[]>([]);
+    const [selectedColors] = useState<string[]>(['red', 'blue', 'green']);
+    const [selectedSizes] = useState<string[]>(['medium', 'large']);
+    const [selectedBrands] = useState<string[]>(['apple', 'samsung']);
 
     const [formData, setFormData] = useState({
         productName: "",
         productCategory: "",
         productColors: selectedColors,
-        productSizes: selectedSizes
+        productSizes: selectedSizes,
+        productBrands: selectedBrands
     });
 
     const handleInput = (event: any) => {
@@ -49,8 +60,6 @@ const CreateProduct: React.FC = () => {
     }
 
     const handleColorsChange = (newSelection: string[]) => {
-        // setSelectedOptions(newSelection);
-        // console.log('Selected Options :: ', newSelection);
         setFormData((prev) => ({
             ...prev,
             productColors: newSelection
@@ -61,6 +70,13 @@ const CreateProduct: React.FC = () => {
         setFormData((prev) => ({
             ...prev,
             productSizes: newSelection
+        }));
+    }
+
+    const handleBrandChange = (newSelection: string[]) => {
+        setFormData((prev) => ({
+            ...prev,
+            productBrands: newSelection
         }));
     }
 
@@ -118,7 +134,6 @@ const CreateProduct: React.FC = () => {
                                             onChange={handleColorsChange}
                                             required={true}
                                             minSelections={2}
-                                            maxSelections={3}
                                             showCheckAll={true}
                                         />
                                         {/* <p>Selected : {selectedOptions.join(', ') || 'None'}</p> */}
@@ -131,9 +146,20 @@ const CreateProduct: React.FC = () => {
                                             groupLabel="Sizes"
                                             onChange={handleSizesChange}
                                             required={true}
-                                            minSelections={4}
-                                            maxSelections={5}
                                             showCheckAll={true}
+                                        />
+                                        {/* <p>Selected : {selectedOptions.join(', ') || 'None'}</p> */}
+                                    </div>
+                                    <div className="w-full max-w-sm min-w-[200px]">
+                                        <CheckboxGroup 
+                                            options={brandOptions}
+                                            initialValues={selectedBrands}
+                                            groupName="productBrands"
+                                            groupLabel="Brand(s)"
+                                            onChange={handleSizesChange}
+                                            required={true}
+                                            minSelections={2}
+                                            maxSelections={4}
                                         />
                                         {/* <p>Selected : {selectedOptions.join(', ') || 'None'}</p> */}
                                     </div>
