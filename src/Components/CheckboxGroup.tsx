@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Checkbox from "./Checkbox";
 
 
-const CheckboxGroup: React.FC<any> = ({ 
+export const CheckboxGroup: React.FC<any> = ({ 
     options, 
     initialValues = [], 
     onChange, 
@@ -20,7 +20,7 @@ const CheckboxGroup: React.FC<any> = ({
 
     // Calculate CheckAll state if showCheckAll is true
     const isAllChecked = selectedValues.length === options.length;
-    const isIndeterminate = selectedValues.length > 0 && selectedValues.length < options.length;
+    // const isIndeterminate = selectedValues.length > 0 && selectedValues.length < options.length;
 
     // Determine the effective minimum selections for validation
     const validationMinSelections = required && minSelections === undefined ? 1 : minSelections || 0;
@@ -37,20 +37,19 @@ const CheckboxGroup: React.FC<any> = ({
 
     const finalErrorMessage = errorMessage || currentErrorMessage;
 
-    // const defaultErrorMessage = `Please select at least ${validationMinSelections} option(s).`;
-    // const defaultErrorMessage = selectedValues.length < validationMinSelections
-    //     ? `Please select at least ${validationMinSelections} option(s).`
-    //     : `Please select no more than ${validationMaxSelections} option(s).`;
-    // const finalErrorMessage = errorMessage || defaultErrorMessage;
+    // --- Crucial addition: useEffect to re-sync internal state with the prop ---
+  useEffect(() => {
+    // Only update if the initialValues prop is different from the current internal state
+    // This prevents infinite loops if initialValues is an empty array that never changes
+    if (initialValues && initialValues !== selectedValues) {
+        setSelectedValues(initialValues);
+    } else if (!initialValues && selectedValues.length > 0) {
+        // Handle cases where initialValues become null/undefined but state still has values
+        setSelectedValues([]);
+    }
+  }, [initialValues]); // Rerun this effect whenever the initialValues prop changes
 
-    // useEffect(() => {
-    //     if (required) {
-    //         setIsValid(selectedValues.length >= validationMinSelections);
-    //     } else {
-    //         setIsValid(true);
-    //     }
-    // }, [selectedValues, required, validationMinSelections]);
-
+  
     useEffect(() => {
         const isMinValid = selectedValues.length >= validationMinSelections;
         const isMaxValid = selectedValues.length <= validationMaxSelections;
@@ -121,4 +120,4 @@ const CheckboxGroup: React.FC<any> = ({
     </>
 }
 
-export default CheckboxGroup;
+// export default CheckboxGroup;

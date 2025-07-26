@@ -1,20 +1,34 @@
 import React, { useState } from "react";
-import CheckboxGroup from "../../Components/CheckboxGroup";
+import {CheckboxGroup} from "../../Components/CheckboxGroup";
 
 const CreateProduct: React.FC = () => {
-    const checkboxOptions = [
+    const colorOptions = [
         { label: "Red", value: "red" },
         { label: "Blue", value: "blue" },
         { label: "Green", value: "green" },
         { label: "Yellow", value: "yellow" },
-        { label: "Black", value: "black" }
+        { label: "Black", value: "black" },
+        { label: "White", value: "white" },
+        { label: "Purple", value: "purple" },
+        { label: "Pink", value: "pink" }
     ];
-    const [selectedOptions] = useState<string[]>(['red', 'green']);
+    const sizeOptions = [
+        { label: "S", value: "small" },
+        { label: "M", value: "medium" },
+        { label: "L", value: "large" },
+        { label: "XL", value: "extra-large" },
+        { label: "XXL", value: "extra-extra-large" },
+        { label: "XXXL", value: "extra-extra-extra-large" }
+    ];
+
+    const [selectedColors] = useState<string[]>([]);
+    const [selectedSizes] = useState<string[]>([]);
 
     const [formData, setFormData] = useState({
         productName: "",
         productCategory: "",
-        productColors: selectedOptions,
+        productColors: selectedColors,
+        productSizes: selectedSizes
     });
 
     const handleInput = (event: any) => {
@@ -34,12 +48,19 @@ const CreateProduct: React.FC = () => {
     )
     }
 
-    const handleSelectionChange = (newSelection: string[]) => {
+    const handleColorsChange = (newSelection: string[]) => {
         // setSelectedOptions(newSelection);
         // console.log('Selected Options :: ', newSelection);
         setFormData((prev) => ({
             ...prev,
             productColors: newSelection
+        }));
+    }
+
+    const handleSizesChange = (newSelection: string[]) => {
+        setFormData((prev) => ({
+            ...prev,
+            productSizes: newSelection
         }));
     }
 
@@ -90,14 +111,28 @@ const CreateProduct: React.FC = () => {
                                     </div>
                                     <div className="w-full max-w-sm min-w-[200px]">
                                         <CheckboxGroup 
-                                            options={checkboxOptions}
-                                            initialValues={selectedOptions}
+                                            options={colorOptions}
+                                            initialValues={selectedColors}
                                             groupName="productColors"
                                             groupLabel="Colors"
-                                            onChange={handleSelectionChange}
+                                            onChange={handleColorsChange}
                                             required={true}
                                             minSelections={2}
-                                            maxSelections={4}
+                                            maxSelections={3}
+                                            showCheckAll={true}
+                                        />
+                                        {/* <p>Selected : {selectedOptions.join(', ') || 'None'}</p> */}
+                                    </div>
+                                    <div className="w-full max-w-sm min-w-[200px]">
+                                        <CheckboxGroup 
+                                            options={sizeOptions}
+                                            initialValues={selectedSizes}
+                                            groupName="productSizes"
+                                            groupLabel="Sizes"
+                                            onChange={handleSizesChange}
+                                            required={true}
+                                            minSelections={4}
+                                            maxSelections={5}
                                             showCheckAll={true}
                                         />
                                         {/* <p>Selected : {selectedOptions.join(', ') || 'None'}</p> */}
