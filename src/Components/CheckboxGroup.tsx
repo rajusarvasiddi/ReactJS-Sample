@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Checkbox from "./Checkbox";
 
 export const CheckboxGroup: React.FC<any> = ({
+  value,
   options,
   initialValues = [],
   onChange,
