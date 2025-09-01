@@ -1,4 +1,5 @@
 import React, { Suspense, useState } from "react";
+import CreateUser from "./Users/CreateUser";
 
 const CreateProduct = React.lazy(() => import("../features/Onboard/CreateProduct"));
 
@@ -24,6 +25,7 @@ const ProductForm: React.FC = () => {
                 </button> */}
                 <Suspense fallback="loading...">
                     <CreateProduct />
+                    <CreateUser />
                 </Suspense>
             </div>
         </main>
