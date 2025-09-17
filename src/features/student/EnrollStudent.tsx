@@ -1,5 +1,6 @@
 import { useFormik, FormikProvider } from "formik";
 import { z } from "zod";
+import { sanitizeName } from "../../utils/validation.util";
 import "./EnrollStudent.css";
 
 const enrollmentSchema = z.object({
@@ -30,7 +31,8 @@ const EnrollStudentForm: React.FC = () => {
     },
   });
 
-  const { errors, values, handleChange, handleBlur, handleSubmit, touched } = formik;
+  const { errors, values, handleChange, handleBlur, handleSubmit, touched } =
+    formik;
 
   return (
     <FormikProvider value={formik}>
@@ -48,11 +50,23 @@ const EnrollStudentForm: React.FC = () => {
               >
                 First Name
               </label>
-              <input
+              {/* <input
                 type="text"
                 name="firstName"
                 value={values.firstName}
                 onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="First Name"
+                className="md:w-2/3 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 py-1 text-sm"
+              /> */}
+              <input
+                type="text"
+                name="firstName"
+                value={values.firstName}
+                onChange={(e) => {
+                  const sanitizedValue = sanitizeName(e.target.value);
+                  formik.setFieldValue("firstName", sanitizedValue);
+                }}
                 onBlur={handleBlur}
                 placeholder="First Name"
                 className="md:w-2/3 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 py-1 text-sm"
