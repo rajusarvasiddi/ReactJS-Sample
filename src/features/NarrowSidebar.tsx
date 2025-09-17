@@ -14,6 +14,7 @@ import ProductForm from './Catalogue';
 const Calendar = React.lazy(() => import("./Calendar"));
 const Tasks = React.lazy(() => import("./Tasks"));
 const Users = React.lazy(() => import("./Users/Users"));
+const EnrollStudentForm = React.lazy(() => import("./student/EnrollStudent"));
 const Inventory = React.lazy(() => import("./Inventory"));
 const Invoices = React.lazy(() => import("./Invoices"));
 const InvoiceDetails = React.lazy(() => import("./InvoiceDetails"));
@@ -50,6 +51,7 @@ function NarrowSidebar() {
                             <Route index element={<Navigate to="overview" replace />} />
 
                             <Route path="users" element={<><PageTitle title="Users" /><Users /></>} />
+                            <Route path="enroll-student" element={<><PageTitle title="Forms" /><EnrollStudentForm /></>} />
                             <Route path="overview" element={<Overview />} />
                             <Route
                                 path="invoice"
