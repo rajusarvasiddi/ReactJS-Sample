@@ -2,21 +2,6 @@ import { useFormik, FormikProvider } from "formik";
 import { z } from "zod";
 import "./EnrollStudent.css";
 
-// Zod schema with full custom validation
-// const enrollmentSchema = z.object({
-//   firstName: z.string().superRefine((val, ctx) => {
-//     console.log("CONTEXT :: ", ctx);
-//     const trimmed = typeof val === "string" ? val.trim() : "";
-
-//     if (trimmed === "") {
-//       ctx.addIssue({
-//         code: "custom", // ✅ use string literal instead of ZodIssueCode.custom
-//         message: "First Name is required",
-//       });
-//     }
-//   })
-// });
-
 const enrollmentSchema = z.object({
   firstName: z.string().min(1, { message: "First Name is required" }).trim(),
 });
@@ -39,24 +24,6 @@ const EnrollStudentForm: React.FC = () => {
       }
       return {};
     },
-    // validate: (values) => {
-    //   const result = enrollmentSchema.safeParse(values);
-    //   if (!result.success) {
-    //     console.log("❌ Zod validation failed:", result.error.issues);
-    //     const formattedErrors: Record<string, string> = {};
-    //     result.error.issues.forEach((issue) => {
-    //       if (issue.path.length > 0) {
-    //         const fieldName = issue.path[0];
-    //         // Only set the first error per field
-    //         if (!formattedErrors[fieldName]) {
-    //           formattedErrors[fieldName] = issue.message;
-    //         }
-    //       }
-    //     });
-    //     return formattedErrors;
-    //   }
-    //   return {};
-    // },
 
     onSubmit: (values) => {
       console.log("Form data ::", values);
